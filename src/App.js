@@ -24,6 +24,11 @@ const App = ({ signOut }) => {
     fetchNotes();
   }, []);
 
+  function sortedNotes() {    
+    return notes.sort((a, b) =>
+      b.createdAt.localeCompare(a.createdAt));
+  }
+
   async function fetchNotes() {
     const apiData = await API.graphql({ query: listNotes });
     const notesFromAPI = apiData.data.listNotes.items;
@@ -100,7 +105,7 @@ const App = ({ signOut }) => {
       </Heading>
     
       <View margin="3rem 0">
-        {notes.map((note) => (
+        {sortedNotes().map((note) => (
           <Flex
             key={note.id || note.name}
             direction="row"
